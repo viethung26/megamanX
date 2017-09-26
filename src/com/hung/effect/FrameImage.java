@@ -7,6 +7,11 @@ import java.awt.image.BufferedImage;
 public class FrameImage {
 	private String name;
 	private BufferedImage image;
+	
+	public FrameImage() {
+		name=null;
+		image=null;
+	}
 	public FrameImage(BufferedImage image,String name) {
 		this.image = image;
 		this.name = name;	
