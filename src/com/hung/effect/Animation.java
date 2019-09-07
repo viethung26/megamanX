@@ -34,15 +34,16 @@ public class Animation {
 		currentFrame = animation.currentFrame;
 		drawRectFrame = animation.drawRectFrame;
 		isRepeated = animation.isRepeated;
-		
-		for(FrameImage img: animation.frames) {
-			frames.add(img);
+		frames = new ArrayList<FrameImage>();
+		for(FrameImage f: animation.frames) {
+			frames.add(new FrameImage(f));
 		}
-		
+		delayTimes = new ArrayList<Double>();
 		for(Double delay: animation.delayTimes) {
 			delayTimes.add(delay);
 		}
 		
+		ignoreFrames = new ArrayList<Boolean>();
 		for(boolean b: animation.ignoreFrames) {
 			ignoreFrames.add(b);
 		}
@@ -153,9 +154,11 @@ public class Animation {
 		}
 	}
 	public void nextFrame() {
-		currentFrame++;
-		if(currentFrame>=frames.size()) 
-			if(isRepeated) currentFrame = 0;
+		if(currentFrame>=frames.size()-1) 
+			{
+				if(isRepeated) currentFrame = 0;
+			}
+		else currentFrame++;
 		if(ignoreFrames.get(currentFrame)) nextFrame();
 	}
 	
@@ -163,7 +166,7 @@ public class Animation {
 		for(int i=0;i<frames.size();i++) {
 			BufferedImage image = frames.get(i).getImage();
 			AffineTransform affineTransform = AffineTransform.getScaleInstance(-1, 1);
-			affineTransform.translate(-image.getWidth()/2, 0);
+			affineTransform.translate(-image.getWidth(), 0);
 			AffineTransformOp op = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 			image = op.filter(image, null);
 			frames.get(i).setImage(image);

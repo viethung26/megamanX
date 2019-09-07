@@ -27,6 +27,7 @@ public class GameFrame extends JFrame {
 		}
 		
 		gamePanel = new GamePanel();
+		this.addKeyListener(gamePanel);
 		add(gamePanel);
 	}	
 	public void startFrame() {
